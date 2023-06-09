@@ -1,58 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diabetic Friendly Meals</title>
-  <link rel="stylesheet" type="text/css" href="/recipeapp/static/styles.css">
-  <link rel="icon" href="/recipeapp/static/images/favicon-32x32.png">
-</head>
-<body>
-  <header>
-    <img src="/recipeapp/static/images/apple-touch-icon.png" style="max-height: 50px;" alt="icon">
-    <h1>Diabetics Meal Companion</h1>
-    <nav>
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Recipes</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
-
+{% extends 'layout.html'%}
+{% block content %}
   <section id="hero">
-    <div class="container">
-      <h2>Discover Delicious African Recipes</h2>
+    <div class="container-box">
+      <h2 class="main">Discover Delicious African Recipes</h2>
       <p>Explore a variety of mouth-watering healthy dishes to satisfy your cravings.</p>
-      <a href="#" class="btn">Get Started</a>
+      <a href="{{ url_for('register') }}" class="btn">Get Started</a>
     </div>
   </section>
 
   <section id="featured-recipes">
-    <div class="container">
-      <h2>Featured Recipes</h2>
-      <div class="recipe-card">
-        <img src="/recipeapp/static/images/recipe1.jpg" alt="Recipe 1">
+    <h2>Featured Recipes</h2>
+    <div class="store row">
+      <div class="recipe-card col-md-4">
+        <img src="{{url_for('static', filename='images/recipe1.jpg')}}" alt="Recipe 1">
         <h3>Breakfast Menu</h3>
         <p>Oats, Granola, Wheatbread and Grains</p>
       </div>
-      <div class="recipe-card">
-        <img src="/recipeapp/static/images/recipe2.jpg" alt="Recipe 2">
+      <div class="recipe-card col-md-4">
+        <img src="{{url_for('static', filename='images/recipe2.jpg')}}" alt="Recipe 2">
         <h3>Lunch Menu</h3>
         <p>Some green pears and Breadfruit</p>
       </div>
-      <div class="recipe-card">
-        <img src="/recipeapp/static/images/recipe3.jpg" alt="Recipe 3">
+      <div class="recipe-card col-md-4">
+        <img src="{{url_for('static', filename='images/recipe3.jpg')}}" alt="Recipe 3">
         <h3>Dinner Menu</h3>
         <p>Tasty Nigerian moin-moin, with low salt content</p>
       </div>
+      <div class="recipe-card col-md-4">
+        <img src="{{url_for('static', filename='images/recipe4.jpg')}}" alt="Recipe 4">
+        <h3>Dessert</h3>
+        <p>Tasty nutrition</p>
+      </div>
     </div>
   </section>
-
-  <footer>
-    <p>&copy; 2023 Diabetes Friendly Menu Site. All rights reserved.</p>
-  </footer>
-</body>
-</html>
+{% endblock content %}

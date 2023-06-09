@@ -28,6 +28,10 @@ posts = [
 def home():
     return (render_template('home.html', posts=posts))
 
+@app.route("/landing_page", methods=['GET', 'POST'])
+def landing_page():
+    return (render_template('landing_page.html', title='Landing Page'))
+
 @app.route("/about")
 def about():
     return (render_template('about.html', title='About'))
