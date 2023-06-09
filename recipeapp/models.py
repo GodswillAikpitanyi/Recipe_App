@@ -3,9 +3,7 @@ from recipeapp import db, login_manager
 from flask_login import UserMixin
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+
 
 # Modules #
 
@@ -20,6 +18,9 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
+
+    def get_id(self):
+        return str(self.user_id)
 
 class Profile(db.Model):
     __tablename__ = 'profiles'
@@ -100,3 +101,8 @@ class Favorite(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user = db.relationship('User', backref=db.backref('favorites'))
     recipe = db.relationship('Recipe', backref=db.backref('favorites'))
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
