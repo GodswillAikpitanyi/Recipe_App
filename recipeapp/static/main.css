@@ -1,32 +1,100 @@
+/* Global styles */
 body {
-  background: #ccdcd5;
-  color: #333333;
+  background: #ffffff;
+  color: #131212;
   margin-top: 5rem;
 }
 
 h1,
-h2,
-h3,
+/* h3, */
 h4,
 h5,
 h6 {
-  color: #444444;
+  color: #ffffff;
 }
 
+/* footer styles */
 .bg-steel {
-  background-color: #9e9496;
+  background-color: #770606;
+  position: absolute;
+  width: 100%;
+  align-items: center;
+  margin-top: 30px;
 }
 
+ul li {
+  list-style: none;
+}
+
+/* Nav bar section */
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
 }
 
 .site-header .navbar-nav .nav-link:hover {
-  color: #ffffff;
+  color: rgb(230, 19, 36);
 }
 
 .site-header .navbar-nav .nav-link.active {
   font-weight: 500;
+}
+
+/* Hero section */
+#hero {
+  background-size: cover;
+  color: rgb(4, 78, 78);
+  text-align: center;
+}
+
+#hero h2 {
+  font-size: 60px;
+  margin-bottom: 20px;
+  font-weight: bolder;
+}
+
+#hero p {
+  font-size: 18px;
+  margin-bottom: 40px;
+}
+
+.container-box {
+  max-width: 960px;
+  height: auto;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #5a0404;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.btn:hover {
+  opacity: 80%;
+  background-color: rgb(43, 168, 168);
+}
+
+/* Body */
+#featured-recipes h2 {
+  margin-bottom: 20px;
+}
+
+div.store {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+div.recipe-card img {
+  max-width: 300px;
+  max-height: 300px;
 }
 
 .content-section {
@@ -42,7 +110,7 @@ h6 {
 }
 
 a.article-title:hover {
-  color: #428bca;
+  color: #0e375a;
   text-decoration: none;
 }
 
@@ -84,7 +152,11 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-.footer {
-  height: 70px;
+/* .footer{
+  position: absolute;
+  height: 80px;
+  width: 100%;
   bottom: 0;
-}
+  align-items: center;
+
+} */
