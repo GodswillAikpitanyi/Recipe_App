@@ -2,7 +2,7 @@
 from flask import render_template, url_for, flash, redirect, request
 from recipeapp import app, db, bcrypt
 from recipeapp.forms import RegistrationForm, LoginForm
-from recipeapp.models import User, Profile, Recipe, Category, Ingredient, RecipeIngredient, RecipeCategory, Favorite
+from recipeapp.models import User, Recipe, Category, Ingredient, RecipeIngredient, RecipeCategory, Favorite
 from flask_login import login_user, current_user, logout_user, login_required
 
 
