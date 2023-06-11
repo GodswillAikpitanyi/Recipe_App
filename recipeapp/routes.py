@@ -1,8 +1,11 @@
 # Imports #
+import os
+import secrets
+from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from recipeapp import app, db, bcrypt
-from recipeapp.forms import RegistrationForm, LoginForm
-from recipeapp.models import User, Profile, Recipe, Category, Ingredient, RecipeIngredient, RecipeCategory, Favorite
+from recipeapp.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from recipeapp.models import User, Recipe, Category, Ingredient, RecipeIngredient, RecipeCategory, Favorite
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -72,8 +75,38 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+def save_picture(form_picture):
+    #saving pictures Uniquely
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/profile_pictures', picture_fn)
 
-@app.route("/account")
+    # Resizing pictures
+    output_size = (125, 125)
+    im = Image.open(form_picture)
+    im.thumbnail(output_size)
+    im.save(picture_path)
+
+    return(picture_fn)
+
+
+@app.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+    form = UpdateAccountForm()
+    if form.validate_on_submit():
+        if form.picture.data:
+            picture_file = save_picture(form.picture.data)
+            current_user.avatar = picture_file
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        db.session.commit()
+        flash('Your account has been updated!', 'success')
+        return redirect(url_for('account'))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+    avatar = url_for('static', filename='profile_pictures/' + current_user.avatar)
+    return render_template('account.html', title='Account',
+                            avatar=avatar, form=form)
