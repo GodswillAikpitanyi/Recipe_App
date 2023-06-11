@@ -4,10 +4,9 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from recipeapp import app, db, bcrypt
-from recipeapp.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from recipeapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, RecipeCreationForm
 from recipeapp.models import User, Recipe, Category, Ingredient, RecipeIngredient, RecipeCategory, Favorite
 from flask_login import login_user, current_user, logout_user, login_required
-
 
 # Posts #
 posts = [
@@ -25,20 +24,22 @@ posts = [
     }
 ]
 
-
 # Routes #
 @app.route("/")
 @app.route("/home")
 def home():
-    return (render_template('home.html', posts=posts))
+    return render_template('home.html', posts=posts)
+
 
 @app.route("/landing_page", methods=['GET', 'POST'])
 def landing_page():
-    return (render_template('landing_page.html', title='Landing Page'))
+    return render_template('landing_page.html', title='Landing Page')
+
 
 @app.route("/about")
 def about():
-    return (render_template('about.html', title='About'))
+    return render_template('about.html', title='About')
+
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -50,9 +51,10 @@ def register():
         user = User(username=form.username.data, email=form.email.data, password_hash=hashed_password)
         db.session.add(user)
         db.session.commit()
-        flash(f'Account has been created! kindly log in', 'success')
+        flash('Account has been created! Kindly log in', 'success')
         return redirect(url_for('login'))
-    return (render_template('register.html', title='Register', form=form))
+    return render_template('register.html', title='Register', form=form)
+
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -66,7 +68,7 @@ def login():
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('home'))
         else:
-            flash('Login Unsuccessful, Please check email and password', 'danger')
+            flash('Login Unsuccessful. Please check email and password', 'danger')
     return render_template('login.html', title='Login', form=form)
 
 
@@ -75,8 +77,9 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+
 def save_picture(form_picture):
-    #saving pictures Uniquely
+    # Saving pictures uniquely
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
@@ -88,7 +91,7 @@ def save_picture(form_picture):
     im.thumbnail(output_size)
     im.save(picture_path)
 
-    return(picture_fn)
+    return picture_fn
 
 
 @app.route("/account", methods=['GET', 'POST'])
@@ -108,5 +111,43 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     avatar = url_for('static', filename='profile_pictures/' + current_user.avatar)
-    return render_template('account.html', title='Account',
-                            avatar=avatar, form=form)
+    return render_template('account.html', title='Account', avatar=avatar, form=form)
+
+
+def meal_picture(form_picture):
+    # Saving pictures uniquely
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(app.root_path, 'static/meal_pictures', picture_fn)
+
+    # Resizing pictures
+    output_size = (500, 500)
+    im = Image.open(form_picture)
+    im.thumbnail(output_size)
+    im.save(picture_path)
+
+    return picture_fn
+
+
+@app.route("/create_recipe", methods=['GET', 'POST'])
+@login_required
+def create_recipe():
+    form = RecipeCreationForm()
+    if form.validate_on_submit():
+        """if form.image_file.data:
+            meal_image = meal_picture(form.image_file.data)
+            current_user.image_file = meal_image"""
+        recipe = Recipe(
+            title=form.title.data,
+            description=form.description.data,
+            instructions=form.instructions.data,
+            prep_time=form.prep_time.data,
+            cook_time=form.cook_time.data,
+            servings=form.servings.data
+        )
+        db.session.add(recipe)
+        db.session.commit()
+        flash('Your recipe has been created!!', 'success')
+        return redirect(url_for('home'))
+    return render_template('create_recipe.html', title='Create Recipe', form=form)

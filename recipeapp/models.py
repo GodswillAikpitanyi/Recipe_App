@@ -40,6 +40,7 @@ class Recipe(db.Model):
     prep_time = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
     servings = db.Column(db.Integer)
+    image_file = db.Column(db.String(255), nullable=False, default='default.jpg')
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     recipe_ingredients = db.relationship('RecipeIngredient', backref='recipe', lazy=True)

@@ -1,0 +1,59 @@
+{% extends "layout.html %}
+{% block content %}
+  <div class="content-section">
+    <div class="media">
+      <img class="rounded-circle recipe-img" src="{{ image_file }}">
+      <div class="media-body">
+        <h2 class="account-heading">{{ current_user.username }}</h2>
+      </div>
+    </div>
+    <form method="POST" action="" enctype="multipart/form-data">
+      {{ form.hidden_tag() }}
+      <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Recipe info</legend>
+
+        <!-- Title form section -->
+        <div class="form-group">
+          {{ form.title.label(class="form-control-label") }}
+          {{ form.title(class="form-control form-control-label-lg") }}
+        </div>
+
+        <!-- description form section -->
+        <div class="form-group">
+          {{ form.description.label(class="form-control-label") }}
+          {{ form.description(class="form-control form-control-label-lg") }}
+        </div>
+
+        <!-- Instructions form section -->
+        <div class="form-group">
+          {{ form.instructions.label(class="form-control-label") }}
+          {{ form.instructions(class="form-control form-control-label-lg") }}
+        </div>
+
+        <!-- Preparation form section -->
+        <div class="form-group">
+          {{ form.prep_time.label(class="form-control-label") }}
+          {{ form.prep_time(class="form-control form-control-label-lg") }}
+        </div>
+
+        <!-- Cooking form section -->
+        <div class="form-group">
+          {{ form.cook_time.label(class="form-control-label") }}
+          {{ form.cook_time(class="form-control form-control-label-lg") }}
+        </div>
+
+        <!-- Servings form section -->
+        <div class="form-group">
+          {{ form.servings.label(class="form-control-label") }}
+          {{ form.servings(class="form-control form-control-label-lg") }}
+        </div>
+
+      </fieldset>
+
+      <!-- submit button for the forms -->
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info")}}
+      </div>
+    </form>
+  </div>
+{% endblock content %}
