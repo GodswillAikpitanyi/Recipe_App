@@ -15,39 +15,103 @@
         <!-- Title form section -->
         <div class="form-group">
           {{ form.title.label(class="form-control-label") }}
-          {{ form.title(class="form-control form-control-label-lg") }}
+          {% if form.title.errors %}
+            {{ form.title(class="form-control form-control-label-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.title.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.title(class="form-control form-control-label-lg") }}
+          {% endif %}
         </div>
 
         <!-- description form section -->
         <div class="form-group">
           {{ form.description.label(class="form-control-label") }}
-          {{ form.description(class="form-control form-control-label-lg") }}
+          {% if form.description.errors %}
+            {{ form.description(class="form-control form-control-label-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.description.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.description(class="form-control form-control-label-lg") }}
+          {% endif %}
         </div>
 
         <!-- Instructions form section -->
         <div class="form-group">
           {{ form.instructions.label(class="form-control-label") }}
-          {{ form.instructions(class="form-control form-control-label-lg") }}
+          {% if form.instructions.errors %}
+            {{ form.instructions(class="form-control form-control-label-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.instructions.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.instructions(class="form-control form-control-label-lg") }}
+          {% endif %}
         </div>
 
         <!-- Preparation form section -->
         <div class="form-group">
           {{ form.prep_time.label(class="form-control-label") }}
-          {{ form.prep_time(class="form-control form-control-label-lg") }}
+          {% if form.prep_time.errors %}
+            {{ form.prep_time(class="form-control form-control-label-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.prep_time.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.prep_time(class="form-control form-control-label-lg") }}
+          {% endif %}
         </div>
 
         <!-- Cooking form section -->
         <div class="form-group">
           {{ form.cook_time.label(class="form-control-label") }}
-          {{ form.cook_time(class="form-control form-control-label-lg") }}
+          {% if form.cook_time.errors %}
+            {{ form.cook_time(class="form-control form-control-label-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.cook_time.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.cook_time(class="form-control form-control-label-lg") }}
+          {% endif %}
         </div>
 
         <!-- Servings form section -->
         <div class="form-group">
           {{ form.servings.label(class="form-control-label") }}
-          {{ form.servings(class="form-control form-control-label-lg") }}
+          {% if form.servings.errors %}
+            {{ form.servings(class="form-control form-control-label-lg is-invalid") }}
+            <div class="invalid-feedback">
+              {% for error in form.servings.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+            </div>
+          {% else %}
+            {{ form.servings(class="form-control form-control-label-lg") }}
+          {% endif %}
         </div>
 
+        <!-- update profile picture form -->
+        <div class="form-group">
+          {{ form.image_file.label() }}
+          {{ form.image_file(class="form-control-file") }}
+          {% if form.image_file.errors %}
+            {% for error in form.image_file.errors %}
+              <span class="text-danger">{{ error }}</span></br>
+            {% endfor %}
+          {% endif %}
+        </div>
       </fieldset>
 
       <!-- submit button for the forms -->

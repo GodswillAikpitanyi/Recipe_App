@@ -8,27 +8,14 @@ from recipeapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, Reci
 from recipeapp.models import User, Recipe, Category, Ingredient, RecipeIngredient, RecipeCategory, Favorite
 from flask_login import login_user, current_user, logout_user, login_required
 
-# Posts #
-posts = [
-    {
-        'author': 'Mr Hamilton',
-        'title': 'Initial recipe',
-        'content': 'first post',
-        'date_posted': 'May 30th, 2023'
-    },
-    {
-        'author': 'Miss Kelly Piquet',
-        'title': 'Subsequent recipe',
-        'content': 'second post',
-        'date_posted': 'May 31th, 2023'
-    }
-]
+
 
 # Routes #
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template('home.html', posts=posts)
+    recipe = Recipe.query.all()
+    return render_template('home.html', recipe=recipe)
 
 
 @app.route("/landing_page", methods=['GET', 'POST'])
@@ -135,9 +122,9 @@ def meal_picture(form_picture):
 def create_recipe():
     form = RecipeCreationForm()
     if form.validate_on_submit():
-        """if form.image_file.data:
+        if form.image_file.data:
             meal_image = meal_picture(form.image_file.data)
-            current_user.image_file = meal_image"""
+            current_user.image_file = meal_image
         recipe = Recipe(
             title=form.title.data,
             description=form.description.data,

@@ -66,7 +66,7 @@ class RecipeCreationForm(FlaskForm):
     servings = IntegerField('Serving', validators=[DataRequired()])
     image_file = FileField('Upload Meal Photo', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
 
-    submit = SubmitField('Update')
+    submit = SubmitField('Create')
 
 
 
