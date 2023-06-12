@@ -2,7 +2,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from recipeapp import app, db, bcrypt
 from recipeapp.forms import RegistrationForm, LoginForm, UpdateAccountForm, RecipeCreationForm
 from recipeapp.models import User, Recipe, Category, Ingredient, RecipeIngredient, RecipeCategory, Favorite
@@ -14,8 +14,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route("/")
 @app.route("/home")
 def home():
-    recipe = Recipe.query.all()
-    return render_template('home.html', recipe=recipe)
+    recipes = Recipe.query.all()
+    return render_template('home.html', recipes=recipes)
 
 
 @app.route("/landing_page", methods=['GET', 'POST'])
@@ -117,9 +117,9 @@ def meal_picture(form_picture):
     return picture_fn
 
 
-@app.route("/create_recipe", methods=['GET', 'POST'])
+@app.route("/recipe/new", methods=['GET', 'POST'])
 @login_required
-def create_recipe():
+def new_recipe():
     form = RecipeCreationForm()
     if form.validate_on_submit():
         if form.image_file.data:
@@ -138,3 +138,49 @@ def create_recipe():
         flash('Your recipe has been created!!', 'success')
         return redirect(url_for('home'))
     return render_template('create_recipe.html', title='Create Recipe', form=form)
+
+
+@app.route("/recipe/<int:recipe_id>")
+def recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    return render_template('recipe.html', title=recipe.title, recipe=recipe)
+
+
+@app.route("/recipe/<int:recipe_id>/update", methods=['GET', 'POST'])
+@login_required
+def update_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.user != current_user:
+        abort(403)
+    form = RecipeCreationForm()
+    if form.validate_on_submit():
+        recipe.title = form.title.data
+        recipe.description = form.description.data
+        recipe.instructions = form.instructions.data
+        recipe.prep_time = form.prep_time.data
+        recipe.cook_time = form.cook_time.data
+        recipe.servings = form.servings.data
+        db.session.commit()
+        flash('Your recipe has been updated!', 'success')
+        return redirect(url_for('recipe', recipe_id=recipe.id))
+    elif request.method == 'GET':
+        form.title.data = recipe.title
+        form.description.data = recipe.description
+        form.instructions.data = recipe.instructions
+        form.prep_time.data = recipe.prep_time
+        form.cook_time.data = recipe.cook_time
+        form.servings.data = recipe.servings
+    return render_template('create_recipe.html', title='Update Recipe',
+                           form=form, legend='Update Recipe')
+
+
+@app.route("/recipe/<int:recipe_id>/delete", methods=['POST'])
+@login_required
+def delete_recipe(recipe_id):
+    recipe = Recipe.query.get_or_404(recipe_id)
+    if recipe.user != current_user:
+        abort(403)
+    db.session.delete(recipe)
+    db.session.commit()
+    flash('Your recipe has been deleted!', 'success')
+    return redirect(url_for('home'))
