@@ -3,6 +3,7 @@ body {
   background: #ffffff;
   color: #131212;
   margin-top: 5rem;
+  
 }
 
 h1,
@@ -11,6 +12,15 @@ h4,
 h5,
 h6 {
   color: #090000;
+}
+
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 10rem;
 }
 
 /* footer styles */
@@ -28,6 +38,7 @@ ul li {
 /* Nav bar section */
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
+  position: relative;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -166,6 +177,7 @@ margin-right: 0;
   width: 100%;
   bottom: 0;
   align-items: center;
-  margin-bottom: 0;
+  bottom: 0;
   background-color: #770606;
+  position: absolute;
 }
