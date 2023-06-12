@@ -14,8 +14,8 @@ from flask_login import login_user, current_user, logout_user, login_required
 @app.route("/")
 @app.route("/home")
 def home():
-    recipes = Recipe.query.all()
-    return render_template('home.html', recipes=recipes)
+    recipe = Recipe.query.all()
+    return render_template('home.html', recipe=recipe)
 
 
 @app.route("/landing_page", methods=['GET', 'POST'])

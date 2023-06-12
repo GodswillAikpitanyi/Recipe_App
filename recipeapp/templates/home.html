@@ -3,13 +3,21 @@
 
   {% for recipe in recipe %}
     <article class="media content-section">
-      <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + recipe.user.avatar) }}">
+      {% if recipe.user %}
+        <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pictures/' + recipe.user.avatar) }}">
+      {% endif %}
       <div class="media-body">
         <div class="article-metadata">
-          <small class="text-muted">{{ recipe.date_posted }}</small>
+          <a class="mr-2" href="#">{{ recipe.user.username }}</a>
+          <small class="text-muted">{{ recipe.created_at.strftime('%Y-%m-%d') }}</small>
         </div>
-        <h2><a class="article-title" href="#">{{ recipe.title }}</a></h2>
+        <h2><a class="article-title" href="{{ url_for('recipe', recipe_id=recipe.recipe_id)}}">{{ recipe.title }}</a></h2>
         <p class="article-content">{{ recipe.description }}</p>
+        <p class="article-content">{{ recipe.instructions }}</p>
+        <p class="article-content">{{ recipe.prep_time }}</p>
+        <p class="article-content">{{ recipe.cook_time }}</p>
+        <p class="article-content">{{ recipe.servings }}</p>
+
       </div>
     </article>
   {% endfor %}
