@@ -10,26 +10,55 @@
 
   <section id="featured-recipes">
     <h2>Featured Recipes</h2>
+    <!-- <div id="myCarousel" class="carousel slide" date-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+        <li data-target="#myCarousel" data-slide-to="3"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="item active">
+          <img src="{{url_for('static', filename='images/recipe1.jpg')}}" alt="recipe1">
+          <div class="carousel-caption">
+            <h3>Breakfast Menu</h3>
+            <p>Oats, bla bla</p>
+          </div>
+        </div>
+        <div class="item">
+          <img src="{{url_for('static', filename='images/recipe2.jpg')}}" alt="recipe2">
+          <div class="carousel-caption">
+            <h3>Lunch Menu</h3>
+            <p>bla bla bla</p>
+          </div>
+        </div>
+      </div>
+    </div> -->
     <div class="store row">
       <div class="recipe-card col-md-4">
         <img src="{{url_for('static', filename='images/recipe1.jpg')}}" alt="Recipe 1">
-        <h3>Breakfast Menu</h3>
+        <h4>Breakfast Menu</h4>
         <p>Oats, Granola, Wheatbread and Grains</p>
       </div>
-      <div class="recipe-card col-md-4 ms-1">
+      <div class="recipe-card col-md-4">
         <img src="{{url_for('static', filename='images/recipe2.jpg')}}" alt="Recipe 2">
-        <h3>Lunch Menu</h3>
-        <p>Some green pears and Breadfruit</p>
+        <h4>Lunch Menu</h4>
+        <p>Ethiopian Collard Greens</p>
       </div>
-      <div class="recipe-card col-md-4 ms-1">
+      <div class="recipe-card col-md-4">
         <img src="{{url_for('static', filename='images/recipe3.jpg')}}" alt="Recipe 3">
-        <h3>Dinner Menu</h3>
+        <h4>Dinner Menu</h4>
         <p>Tasty Nigerian moin-moin, with low salt content</p>
       </div>
       <div class="recipe-card col-md-4">
         <img src="{{url_for('static', filename='images/recipe4.jpg')}}" alt="Recipe 4">
-        <h3>Dessert</h3>
+        <h4>Appetizers</h4>
         <p>Tasty nutrition</p>
+      </div>
+      <div class="recipe-card col-md-4">
+        <img src="{{url_for('static', filename='images/recipe5.jpg')}}" alt="Recipe 5">
+        <h4>Dessert</h4>
+        <p>Some Green pears and Breadfruit</p>
       </div>
     </div>
   </section>
