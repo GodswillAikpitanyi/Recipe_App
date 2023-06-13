@@ -8,10 +8,10 @@
 
         <!-- update meal picture form -->
         <div class="form-group">
-          {{ form.image_file.label() }}
-          {{ form.image_file(class="form-control-file") }}
-          {% if form.image_file.errors %}
-            {% for error in form.image_file.errors %}
+          {{ form.avatar.label() }}
+          {{ form.avatar(class="form-control-file") }}
+          {% if form.avatar.errors %}
+            {% for error in form.avatar.errors %}
               <span class="text-danger">{{ error }}</span></br>
             {% endfor %}
           {% endif %}

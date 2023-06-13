@@ -3,7 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from recipeapp.models import User
+from recipeapp.models import User, Recipe
 
 
 # Registration Form
@@ -64,7 +64,7 @@ class RecipeCreationForm(FlaskForm):
     prep_time = IntegerField('Preparation Time', validators=[DataRequired()])
     cook_time = IntegerField('Cooking Time', validators=[DataRequired()])
     servings = IntegerField('Serving', validators=[DataRequired()])
-    image_file = FileField('Upload Meal Photo', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
+    avatar = FileField('Upload Meal Photo', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
 
     submit = SubmitField('Create')
 
