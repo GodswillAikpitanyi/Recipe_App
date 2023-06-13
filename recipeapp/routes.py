@@ -11,17 +11,17 @@ from flask_login import login_user, current_user, logout_user, login_required
 
 
 # Routes #
+
 @app.route("/")
-@app.route("/home")
-def home():
-    recipe = Recipe.query.all()
-    return render_template('home.html', recipe=recipe)
-
-
 @app.route("/landing_page", methods=['GET', 'POST'])
 def landing_page():
     return render_template('landing_page.html', title='Landing Page')
 
+@app.route("/home")
+@login_required
+def home():
+    recipe = Recipe.query.all()
+    return render_template('home.html', recipe=recipe)
 
 @app.route("/about")
 def about():
@@ -101,30 +101,31 @@ def account():
     return render_template('account.html', title='Account', avatar=avatar, form=form)
 
 
-def meal_picture(form_picture):
+def meal_picture(form_image_file):
     # Saving pictures uniquely
     random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/meal_pictures', picture_fn)
+    _, f_ext = os.path.splitext(form_image_file.filename)
+    imageFile_fn = random_hex + f_ext
+    imageFile_path = os.path.join(app.root_path, 'static/meal_pictures', imageFile_fn)
 
     # Resizing pictures
-    output_size = (500, 500)
-    im = Image.open(form_picture)
+    output_size = (400, 400)
+    im = Image.open(form_image_file)
     im.thumbnail(output_size)
-    im.save(picture_path)
+    im.save(imageFile_path)
 
-    return picture_fn
+    return imageFile_fn
 
 
 @app.route("/recipe/new", methods=['GET', 'POST'])
 @login_required
 def new_recipe():
+    recipe = Recipe.query.filter_by(user_id=current_user.user_id).first()
     form = RecipeCreationForm()
     if form.validate_on_submit():
         if form.image_file.data:
             meal_image = meal_picture(form.image_file.data)
-            current_user.image_file = meal_image
+            recipe.user.image_file = meal_image
         recipe = Recipe(
             title=form.title.data,
             description=form.description.data,
@@ -137,7 +138,8 @@ def new_recipe():
         db.session.commit()
         flash('Your recipe has been created!!', 'success')
         return redirect(url_for('home'))
-    return render_template('create_recipe.html', title='Create Recipe', form=form)
+    image_file = url_for('static', filename='meal_pictures/' + recipe.current_user.image_file)
+    return render_template('create_recipe.html', title='Create Recipe', form=form, legend='New Recipe', image_file=image_file)
 
 
 @app.route("/recipe/<int:recipe_id>")
