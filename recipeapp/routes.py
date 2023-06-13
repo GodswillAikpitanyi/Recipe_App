@@ -144,7 +144,7 @@ def new_recipe():
         db.session.commit()
         flash('Your recipe has been created!!', 'success')
         return redirect(url_for('home'))
-    return render_template('create_recipe.html', title='Create Recipe', form=form, legend='New Recipe')
+    return render_template('create_recipe.html', title='New Recipe', form=form, legend='New Recipe')
 
 
 @app.route("/recipe/<int:recipe_id>")
