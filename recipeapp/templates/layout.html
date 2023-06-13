@@ -27,7 +27,8 @@
   <header class="site-header">
     <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
       <div class="container">
-        <a class="navbar-brand mr-4" href="{{ url_for('landing_page') }}">Recipe site</a>
+        <img src="{{url_for('static', filename='images/favicon-32x32.png')}}" alt="">
+        <a class="navbar-brand mr-4" href="{{ url_for('landing_page') }}">Meal Companion</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -93,21 +94,24 @@
                 <p>Improving the lives of millions around the world with diabetic-friendly diets.</p>
             </div>
             <div class="col-md-3">
-              <h4>Contact</h4>
-                <a href="recipeapp@mail.com">send us an email</a>
+              <h4>Customer Info</h4>
+              <ul>
+                <li><a href="support@recipeapp.com">Subscribe By Email</a></li>
+                <li><a href="recipeapp@mail.com">Privacy Policy</a></li>
+                <li><a href="#">Terms of Use</a></li>
+              </ul>
             </div>
             <div class="col-md-3">
               <h4>Socials</h4>
-              <a href="www.instagram.com/recipe_app"><img src="{{url_for('static', filename='images/instagram-.png')}}"></a>
-            </div>
-            <div class="col-md-3">
+              <a href="www.youtube.com/recipe_app"><img src="{{url_for('static', filename='images/youtube-logo.png')}}"></a>
               <a href="www.twitter.com/recipe_app"><img src="{{url_for('static', filename='images/twitter-logo.png')}}"></a>
-            </div>
-            <div class="col-md-3">
               <a href="www.facebook.com/recipe_app"><img src="{{url_for('static', filename='images/facebook-logo.png')}}"></a>
+              <a href="www.instagram.com/recipeapp"><img src="{{url_for('static', filename='images/instagram-logo.png')}}"></a>
             </div>
           </div>
-        <p>&copy; 2023 Diabetes Recipe Site. All rights reserved.</p>
+    </div>
+    <div class="copyright">
+    <p>&copy; 2023 Diabetes Recipe Site. All rights reserved.</p>
     </div>
 </footer>
 </body>
