@@ -31,6 +31,7 @@ ul li {
 /* Nav bar section */
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
+  position: relative;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -186,11 +187,4 @@ a.article-title:hover {
   max-width: 50px;
 }
 
-.copyright {
-  color: rgb(2, 61, 61);
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
 }
