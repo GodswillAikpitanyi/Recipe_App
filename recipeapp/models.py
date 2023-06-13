@@ -97,4 +97,3 @@ class Favorite(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
 
-
