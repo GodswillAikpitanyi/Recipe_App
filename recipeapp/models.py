@@ -17,10 +17,10 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(60), nullable=False)
     full_name = db.Column(db.String(120))
     bio = db.Column(db.Text)
-    avatar = db.Column(db.String(255), nullable=False, default='default.jpg')
+    image_file = db.Column(db.String(255), nullable=False, default='default.jpg')
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    recipes = db.relationship('Recipe', backref='user', lazy=True)
+    recipes = db.relationship('Recipe', backref='author', lazy=True)
     favorites = db.relationship('Favorite', backref='user', lazy=True)
 
     def __repr__(self):
@@ -40,7 +40,7 @@ class Recipe(db.Model):
     prep_time = db.Column(db.Integer)
     cook_time = db.Column(db.Integer)
     servings = db.Column(db.Integer)
-    image_file = db.Column(db.String(255), nullable=False, default='default.jpg')
+    avatar = db.Column(db.String(255), nullable=False, default='default.jpg')
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     recipe_ingredients = db.relationship('RecipeIngredient', backref='recipe', lazy=True)
