@@ -8,7 +8,6 @@ from flask_mail import Mail
 
 
 
-
 # Configurations #
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'eedbf600942368e59f9b73eefa187ba9'
@@ -16,7 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'users.login'
 login_manager.login_message_category = 'info'
 app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
 app.config['MAIL_PORT'] = 587
@@ -27,4 +26,10 @@ mail = Mail(app)
 
 
 # circular import prevention #
-from recipeapp import routes
+from recipeapp.users.routes import users
+from recipeapp.recipes.routes import recipes
+from recipeapp.main.routes import main
+
+app.register_blueprint(users)
+app.register_blueprint(recipes)
+app.register_blueprint(main)

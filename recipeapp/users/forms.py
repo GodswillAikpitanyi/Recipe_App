@@ -1,10 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, TextAreaField, IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from recipeapp.models import User, Recipe
-
+from flask_login import current_user
+from recipeapp.models import User
 
 # Registration Form
 class RegistrationForm(FlaskForm):
@@ -54,20 +53,6 @@ class UpdateAccountForm(FlaskForm):
             user = User.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('Email is taken, please choose a different one.')
-
-
-# Recipe creation Form #
-class RecipeCreationForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired(), Length(min=5)])
-    description = TextAreaField('Description', validators=[DataRequired()])
-    instructions = TextAreaField('Instructions', validators=[DataRequired()])
-    prep_time = IntegerField('Preparation Time', validators=[DataRequired()])
-    cook_time = IntegerField('Cooking Time', validators=[DataRequired()])
-    servings = IntegerField('Serving', validators=[DataRequired()])
-    avatar = FileField('Upload Meal Photo', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
-
-    submit = SubmitField('Create')
-
 
 
 class RequestResetForm(FlaskForm):

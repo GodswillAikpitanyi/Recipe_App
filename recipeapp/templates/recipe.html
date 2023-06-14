@@ -4,11 +4,11 @@
     <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pictures/' ~ recipe.author.image_file) }}">
     <div class="media-body">
       <div class="article-metadata">
-        <a class="mr-2" href="{{ url_for('user_recipe', username=recipe.author.username) }}">{{ recipe.author.username }}</a>
+        <a class="mr-2" href="{{ url_for('users.user_recipe', username=recipe.author.username) }}">{{ recipe.author.username }}</a>
         <small class="text-muted">{{ recipe.created_at.strftime('%Y-%m-%d') }}</small>
         {% if recipe.author == current_user %}
           <div>
-            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', recipe_id=recipe.recipe_id) }}">Update</a>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('recipe.update_recipe', recipe_id=recipe.recipe_id) }}">Update</a>
             <button type="button" class="btn btn-danger btn-sm m-1" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
           </div>
         {% endif %}
@@ -35,7 +35,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <form action="{{ url_for('delete_recipe', recipe_id=recipe.recipe_id) }}" method="POST">
+          <form action="{{ url_for('recipes.delete_recipe', recipe_id=recipe.recipe_id) }}" method="POST">
             <input class="btn btn-danger" type="submit" value="Delete">
           </form>
         </div>
