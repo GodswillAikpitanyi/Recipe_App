@@ -1,7 +1,7 @@
 import os
 import secrets
 from PIL import Image
-from flask import url_for
+from flask import url_for, current_app
 from flask_mail import Message
 from recipeapp import mail
 
@@ -11,7 +11,7 @@ def save_picture(form_picture):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
     picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pictures', picture_fn)
+    picture_path = os.path.join(current_app.root_path, 'static/profile_pictures', picture_fn)
 
     # Resizing pictures
     output_size = (125, 125)
@@ -29,7 +29,7 @@ def meal_picture(form_avatar):
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_avatar.filename)
     imageFile_fn = random_hex + f_ext
-    imageFile_path = os.path.join(app.root_path, 'static/meal_pictures', imageFile_fn)
+    imageFile_path = os.path.join(current_app.root_path, 'static/meal_pictures', imageFile_fn)
 
     # Resizing pictures
     output_size = (400, 400)
