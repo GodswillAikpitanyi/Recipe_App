@@ -9,8 +9,6 @@ from recipeapp.config import Config
 
 
 # Configurations #
-app = Flask(__name__)
-app.config.from_object(Config)
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
@@ -34,8 +32,12 @@ def create_app(config_class=Config):
     from recipeapp.users.routes import users
     from recipeapp.recipes.routes import recipes
     from recipeapp.main.routes import main
+    from recipeapp.errors.handlers import errors
+
+    # Flask blueprint register
     app.register_blueprint(users)
     app.register_blueprint(recipes)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
 
     return app

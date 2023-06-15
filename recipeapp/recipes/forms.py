@@ -10,9 +10,9 @@ class RecipeCreationForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=5)])
     description = TextAreaField('Description', validators=[DataRequired()])
     instructions = TextAreaField('Instructions', validators=[DataRequired()])
-    prep_time = IntegerField('Preparation Time', validators=[DataRequired()])
-    cook_time = IntegerField('Cooking Time', validators=[DataRequired()])
-    servings = IntegerField('Serving', validators=[DataRequired()])
+    prep_time = IntegerField('Preparation Time (mins)', validators=[DataRequired()])
+    cook_time = IntegerField('Cooking Time (mins)', validators=[DataRequired()])
+    servings = IntegerField('Serving (plates)', validators=[DataRequired()])
     avatar = FileField('Upload Meal Photo', validators=[FileAllowed(['jpg', 'jpeg', 'png'])])
 
     submit = SubmitField('Create')

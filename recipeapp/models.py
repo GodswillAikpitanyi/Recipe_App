@@ -4,14 +4,13 @@ from flask import current_app
 from recipeapp import db, login_manager
 from flask_login import UserMixin
 
+# login required check
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# Modules #
 
 class User(db.Model, UserMixin):
-    # user class #
     __tablename__ = 'users'
     user_id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
@@ -25,9 +24,9 @@ class User(db.Model, UserMixin):
     recipes = db.relationship('Recipe', backref='author', lazy=True)
     favorites = db.relationship('Favorite', backref='user', lazy=True)
 
-    def get_reset_token(self, expires_sec=1800):
+    def get_reset_token(self, expires_sec=600):
         s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
+        return s.dumps({'user_id': self.user_id}).decode('utf-8')
 
     @staticmethod
     def verify_reset_token(token):
@@ -64,6 +63,10 @@ class Recipe(db.Model):
     def __repr__(self):
         return f"Recipe('{self.title}', '{self.description}', '{self.instructions}', '{self.prep_time}', '{self.cook_time}', '{self.servings}')"
 
+    def get_id(self):
+        return str(self.recipe_id)
+
+
 class Ingredient(db.Model):
     __tablename__ = 'ingredients'
     ingredient_id = db.Column(db.Integer, primary_key=True)
@@ -74,6 +77,7 @@ class Ingredient(db.Model):
 
     def __repr__(self):
         return f"Ingredient('{self.__tablename__}', '{self.name}')"
+
 
 class Category(db.Model):
     __tablename__ = 'categories'
@@ -86,6 +90,7 @@ class Category(db.Model):
     def __repr__(self):
         return f"Category('{self.__tablename__}', '{self.name}')"
 
+
 class RecipeIngredient(db.Model):
     __tablename__ = 'recipe_ingredients'
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.recipe_id'), primary_key=True)
@@ -97,6 +102,7 @@ class RecipeIngredient(db.Model):
     def __repr__(self):
         return f"RecipeIngredient('{self.quantity}')"
 
+
 class RecipeCategory(db.Model):
     __tablename__ = 'recipe_categories'
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.recipe_id'), primary_key=True)
@@ -104,11 +110,10 @@ class RecipeCategory(db.Model):
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
+
 class Favorite(db.Model):
     __tablename__ = 'favorites'
     favorite_id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.recipe_id'))
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-
